@@ -1,0 +1,32 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-time Data Update</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.1/socket.io.js" integrity="sha384-3xAg9F2MsF6PXkAGjPqRhSUCZkdMzWIkSfBRzBf1sE1PUVvQ4QJHjuyZw9zNsd+w" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf-8">
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        socket.on('connect', function() {
+            console.log('Connected!');
+        });
+
+        socket.on('value_updated', function(new_value) {
+            document.getElementById('value').innerHTML = new_value;
+        });
+
+        function updateValue() {
+            var newValue = document.getElementById('new_value').value;
+            socket.emit('update', newValue);
+        }
+    </script>
+</head>
+<body>
+    <h1>Real-time Data Update</h1>
+    <p>Current Value: <span id="value">{{ data['value'] }}</span></p>
+    <input type="number" id="new_value" placeholder="Enter new value">
+    <button onclick="updateValue()">Update Value</button>
+</body>
+</html>

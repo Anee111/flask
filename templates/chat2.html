@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang ="en">
+<head>
+    <meta charset = "UTF-8">
+    <title>  my chat application </title>
+</head>
+<body>
+<h1> my chat app room {{roomid}}</h1>
+ <div id = "messages" ></div>
+ <form>
+    <input type ="text" placeholder = "Enter your message here">
+    <button type ="submit"> send</button>
+ </form>
+</body>
+<script src ="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+<script>
+    const socket =io.connect("https://gray-hairdresser-iyyrm.pwskills.app:5005/");
+
+    socket.on("connect",function () {
+        socket.emit("join_room",{
+            username: "{{username}}",
+            roomid:"{{roomid}}"
+        })
+    })
+</html>
